@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model paciente {
+  id_paciente        Int       @id @default(autoincrement())
+  dni                String    @db.Char(8)
+  nombres            String    @db.VarChar(100)
+  apellido_paterno   String    @db.VarChar(100)
+  apellido_materno   String    @db.VarChar(100)
+  correo             String    @db.VarChar(150)
+  celular            String    @db.Char(9)
+  fecha_nacimiento   DateTime  @db.Date
+  sexo               String    @db.Char(1)
+  direccion          String?   @db.VarChar(1024)
+  estado_auditoria   String    @default("1") @db.Char(1)
+  fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime? @db.Timestamp(6)
+  cita               cita[]
+}
+
+model cita {
+  id_cita            Int       @id @default(autoincrement())
+  id_paciente        Int
+  id_servicio        Int
+  id_medico          Int
+  fecha_cita         DateTime  @db.Date
+  hora_cita          String    @db.VarChar(9)
+  estado_cita        String    @db.VarChar(50)
+  notas_adicionales  String
+  estado_auditoria   String    @default(dbgenerated("1")) @db.Char(1)
+  fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime? @db.Timestamp(6)
+  medico             medico    @relation(fields: [id_medico], references: [id_medico], onDelete: NoAction, onUpdate: NoAction, map: "fk_cita_medico")
+  paciente           paciente  @relation(fields: [id_paciente], references: [id_paciente], onDelete: NoAction, onUpdate: NoAction, map: "fk_cita_paciente")
+  servicio           servicio  @relation(fields: [id_servicio], references: [id_servicio], onDelete: NoAction, onUpdate: NoAction, map: "fk_cita_servicio")
+}
+
+model medico {
+  id_medico          Int       @id @default(autoincrement())
+  dni                String    @db.VarChar(8)
+  nombres            String    @db.VarChar(100)
+  apellido_paterno   String    @db.VarChar(100)
+  apellido_materno   String    @db.VarChar(100)
+  sexo               String    @db.Char(1)
+  especialidad       String    @db.VarChar(100)
+  estado_auditoria   String    @default(dbgenerated("1")) @db.Char(1)
+  fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime? @db.Timestamp(6)
+  cita               cita[]
+}
+
+model servicio {
+  id_servicio        Int       @id @default(autoincrement())
+  nombre_servicio    String    @db.VarChar(150)
+  categoria          String    @db.VarChar(150)
+  precio             Decimal   @db.Decimal(10, 2)
+  estado_auditoria   String    @default(dbgenerated("1")) @db.Char(1)
+  fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime? @db.Timestamp(6)
+  cita               cita[]
+}
