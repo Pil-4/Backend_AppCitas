@@ -12,6 +12,8 @@ import servicioRoutes from './routes/servicioRoutes';
 
 import citaRoutes from './routes/citaRoutes';
 
+import categoriaRoutes from './routes/categoriaRoutes';
+
 // import carreraRoutes from './routes/carreraRoutes';
 
 
@@ -31,6 +33,10 @@ app.use('/api/v1/medico',medicoRoutes);
 app.use('/api/v1/servicio',servicioRoutes);
 
 app.use('/api/v1/cita',citaRoutes);
+
+app.use('/api/v1/categoria',categoriaRoutes);
+
+
 
 // app.use('/api/v1/carrera',carreraRoutes);
 

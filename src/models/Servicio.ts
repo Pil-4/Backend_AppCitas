@@ -1,8 +1,10 @@
+import { ICategoria } from "./Categoria";
+
 export interface IServicio {
-    idServicio: number;
-    nombreServicio: string;
-    categoria: string;
-    precio: number;
+    idServicio:number;
+    categoria:ICategoria;
+    nombreServicio:string;
+    precio:number;
     estadoAuditoria: string;
     fechaCreacion: Date;
     fechaModificacion: Date;

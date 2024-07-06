@@ -12,6 +12,7 @@ export const fromPrismaCita = (cita: cita): any=> ({
     notasAdicionales:cita.notas_adicionales
 });
 
+
 export const toPrismaCita = (cita: ICita): any => ({
     id_paciente:cita.paciente,
     id_servicio:cita.servicio,

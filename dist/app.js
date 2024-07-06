@@ -11,6 +11,7 @@ const pacienteRoutes_1 = __importDefault(require("./routes/pacienteRoutes"));
 const medicoRoutes_1 = __importDefault(require("./routes/medicoRoutes"));
 const servicioRoutes_1 = __importDefault(require("./routes/servicioRoutes"));
 const citaRoutes_1 = __importDefault(require("./routes/citaRoutes"));
+const categoriaRoutes_1 = __importDefault(require("./routes/categoriaRoutes"));
 // import carreraRoutes from './routes/carreraRoutes';
 const app = (0, express_1.default)();
 //Database
@@ -21,6 +22,7 @@ app.use('/api/v1/paciente', pacienteRoutes_1.default);
 app.use('/api/v1/medico', medicoRoutes_1.default);
 app.use('/api/v1/servicio', servicioRoutes_1.default);
 app.use('/api/v1/cita', citaRoutes_1.default);
+app.use('/api/v1/categoria', categoriaRoutes_1.default);
 // app.use('/api/v1/carrera',carreraRoutes);
 exports.default = app;
 //# sourceMappingURL=app.js.map

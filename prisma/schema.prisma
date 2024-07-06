@@ -39,6 +39,7 @@ model cita {
   medico             medico    @relation(fields: [id_medico], references: [id_medico], onDelete: NoAction, onUpdate: NoAction, map: "fk_cita_medico")
   paciente           paciente  @relation(fields: [id_paciente], references: [id_paciente], onDelete: NoAction, onUpdate: NoAction, map: "fk_cita_paciente")
   servicio           servicio  @relation(fields: [id_servicio], references: [id_servicio], onDelete: NoAction, onUpdate: NoAction, map: "fk_cita_servicio")
+  pago               pago[]
 }
 
 model medico {
@@ -53,15 +54,58 @@ model medico {
   fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)
   fecha_modificacion DateTime? @db.Timestamp(6)
   cita               cita[]
+  horario            horario[]
 }
 
 model servicio {
   id_servicio        Int       @id @default(autoincrement())
+  id_categoria       Int
   nombre_servicio    String    @db.VarChar(150)
-  categoria          String    @db.VarChar(150)
   precio             Decimal   @db.Decimal(10, 2)
   estado_auditoria   String    @default(dbgenerated("1")) @db.Char(1)
   fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)
   fecha_modificacion DateTime? @db.Timestamp(6)
   cita               cita[]
+  categoria          categoria @relation(fields: [id_categoria], references: [id_categoria], onDelete: NoAction, onUpdate: NoAction, map: "fk_servicio_categoria")
+}
+
+model categoria {
+  id_categoria       Int        @id @default(autoincrement())
+  nombre_categoria   String     @db.VarChar(150)
+  estado_auditoria   String     @default(dbgenerated("1")) @db.Char(1)
+  fecha_creacion     DateTime   @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime?  @db.Timestamp(6)
+  servicio           servicio[]
+}
+
+model horario {
+  id_horario         Int       @default(autoincrement())
+  id_medico          Int
+  dia_semana         String    @db.VarChar(2)
+  hora_inicio        DateTime  @db.Timetz(6)
+  hora_fin           DateTime  @db.Timetz(6)
+  estado_auditoria   String    @default(dbgenerated("1")) @db.Char(1)
+  fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime? @db.Timestamp(6)
+  medico             medico    @relation(fields: [id_medico], references: [id_medico], onDelete: NoAction, onUpdate: NoAction, map: "fk_horario_medico")
+
+  @@id([id_horario, id_medico, dia_semana])
+}
+
+model pago {
+  id_pago            Int       @id @default(autoincrement())
+  id_cita            Int
+  nombres            String    @db.VarChar(250)
+  apellido_paterno   String    @db.VarChar(100)
+  apellido_materno   String    @db.VarChar(100)
+  dni                String    @db.Char(8)
+  fecha_pago         DateTime  @db.Time(6)
+  tipo_de_pago       String    @db.VarChar(100)
+  subtotal_pago      Decimal   @db.Decimal(10, 2)
+  igv_pago           Decimal   @db.Decimal(10, 2)
+  total_pago         Decimal   @db.Decimal(10, 2)
+  estado_auditoria   String    @default(dbgenerated("1")) @db.Char(1)
+  fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime? @db.Timestamp(6)
+  cita               cita      @relation(fields: [id_cita], references: [id_cita], onDelete: NoAction, onUpdate: NoAction, map: "fk_pago_cita")
 }
