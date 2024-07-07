@@ -14,6 +14,8 @@ import citaRoutes from './routes/citaRoutes';
 
 import categoriaRoutes from './routes/categoriaRoutes';
 
+import pagoRoutes from './routes/pagoRoutes';
+
 // import carreraRoutes from './routes/carreraRoutes';
 
 
@@ -35,6 +37,8 @@ app.use('/api/v1/servicio',servicioRoutes);
 app.use('/api/v1/cita',citaRoutes);
 
 app.use('/api/v1/categoria',categoriaRoutes);
+
+app.use('/api/v1/pago',pagoRoutes);
 
 
 
