@@ -13,6 +13,7 @@ const servicioRoutes_1 = __importDefault(require("./routes/servicioRoutes"));
 const citaRoutes_1 = __importDefault(require("./routes/citaRoutes"));
 const categoriaRoutes_1 = __importDefault(require("./routes/categoriaRoutes"));
 const pagoRoutes_1 = __importDefault(require("./routes/pagoRoutes"));
+const horarioRoutes_1 = __importDefault(require("./routes/horarioRoutes"));
 // import carreraRoutes from './routes/carreraRoutes';
 const app = (0, express_1.default)();
 //Database
@@ -25,6 +26,7 @@ app.use('/api/v1/servicio', servicioRoutes_1.default);
 app.use('/api/v1/cita', citaRoutes_1.default);
 app.use('/api/v1/categoria', categoriaRoutes_1.default);
 app.use('/api/v1/pago', pagoRoutes_1.default);
+app.use('/api/v1/horario', horarioRoutes_1.default);
 // app.use('/api/v1/carrera',carreraRoutes);
 exports.default = app;
 //# sourceMappingURL=app.js.map

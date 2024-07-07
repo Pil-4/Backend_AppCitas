@@ -79,7 +79,7 @@ model categoria {
 }
 
 model horario {
-  id_horario         Int       @default(autoincrement())
+  id_horario         Int       @id @default(autoincrement())
   id_medico          Int
   dia_semana         String    @db.VarChar(2)
   hora_inicio        DateTime  @db.Timetz(6)
@@ -88,8 +88,6 @@ model horario {
   fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)
   fecha_modificacion DateTime? @db.Timestamp(6)
   medico             medico    @relation(fields: [id_medico], references: [id_medico], onDelete: NoAction, onUpdate: NoAction, map: "fk_horario_medico")
-
-  @@id([id_horario, id_medico, dia_semana])
 }
 
 model pago {
