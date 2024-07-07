@@ -24,4 +24,4 @@ export const toPrismaPaciente = (paciente: IPaciente): any => ({
     fecha_nacimiento: paciente.fechaNacimiento,
     sexo: paciente.sexo,
     direccion: paciente.direccion
-})
+})  

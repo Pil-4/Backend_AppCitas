@@ -1,11 +1,9 @@
 "use strict";
-/**
- * CONFIGURAR RUTAS Y CONEXION BD, ENTRE OTRAS COSAS DEL SERVICIO
- */
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+// src/app.ts
 const express_1 = __importDefault(require("express"));
 const pacienteRoutes_1 = __importDefault(require("./routes/pacienteRoutes"));
 const medicoRoutes_1 = __importDefault(require("./routes/medicoRoutes"));
@@ -14,12 +12,11 @@ const citaRoutes_1 = __importDefault(require("./routes/citaRoutes"));
 const categoriaRoutes_1 = __importDefault(require("./routes/categoriaRoutes"));
 const pagoRoutes_1 = __importDefault(require("./routes/pagoRoutes"));
 const horarioRoutes_1 = __importDefault(require("./routes/horarioRoutes"));
-// import carreraRoutes from './routes/carreraRoutes';
+const swagger_1 = __importDefault(require("./swagger"));
 const app = (0, express_1.default)();
-//Database
-//Midlewares
+// Midlewares
 app.use(express_1.default.json());
-//Routes
+// Routes
 app.use('/api/v1/paciente', pacienteRoutes_1.default);
 app.use('/api/v1/medico', medicoRoutes_1.default);
 app.use('/api/v1/servicio', servicioRoutes_1.default);
@@ -27,6 +24,7 @@ app.use('/api/v1/cita', citaRoutes_1.default);
 app.use('/api/v1/categoria', categoriaRoutes_1.default);
 app.use('/api/v1/pago', pagoRoutes_1.default);
 app.use('/api/v1/horario', horarioRoutes_1.default);
-// app.use('/api/v1/carrera',carreraRoutes);
+// Swagger setup
+(0, swagger_1.default)(app);
 exports.default = app;
 //# sourceMappingURL=app.js.map
