@@ -23,26 +23,34 @@ const insertarHorario = (horario) => __awaiter(void 0, void 0, void 0, function*
 exports.insertarHorario = insertarHorario;
 const listarHorarios = () => __awaiter(void 0, void 0, void 0, function* () {
     const horario = yield prisma.horario.findMany({
-        where: {
-            estado_auditoria: '1'
+        include: {
+            medico: true
         }
     });
-    return horario.map((horario) => (0, horarioMapper_1.fromPrismaHorario)(horario));
+    return horario.map((horario) => (0, horarioMapper_1.fromPrismaHorario)(horario, horario.medico));
 });
 exports.listarHorarios = listarHorarios;
 const obtenerHorario = (idHorario) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('horarioService::obtenerHorario', idHorario);
+    // console.log('horarioService::obtenerHorario',idHorario);
+    // const horario: horario =  await prisma.horario.findUnique({
+    //     where: {
+    //         id_horario: idHorario,
+    //         estado_auditoria:'1'
+    //     }
+    // });
+    // return fromPrismaHorario(horario);
     const horario = yield prisma.horario.findUnique({
         where: {
-            id_horario: idHorario,
-            estado_auditoria: '1'
+            id_horario: idHorario
+        },
+        include: {
+            medico: true
         }
     });
-    return (0, horarioMapper_1.fromPrismaHorario)(horario);
+    return (0, horarioMapper_1.fromPrismaHorario)(horario, horario.medico);
 });
 exports.obtenerHorario = obtenerHorario;
 const modificarHorario = (idHorario, horario) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('horarioService::modificarHorario', idHorario, horario);
     yield prisma.horario.update({
         data: (0, horarioMapper_1.toPrismaHorario)(horario),
         where: {

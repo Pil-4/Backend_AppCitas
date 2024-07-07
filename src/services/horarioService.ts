@@ -14,29 +14,38 @@ export const insertarHorario = async (horario: IHorario) => {
 }
 
 export const listarHorarios = async () => {
-    const horario: horario[] = await prisma.horario.findMany({
-        where: {
-            estado_auditoria: '1'
+    const horario: any[] = await prisma.horario.findMany({
+        include: {
+            medico: true
         }
     });
-    return horario.map((horario: horario)=> fromPrismaHorario(horario));
+    return horario.map((horario: any)=> fromPrismaHorario(horario, horario.medico));
 }
 
 export const obtenerHorario = async (idHorario: number) => {
-    console.log('horarioService::obtenerHorario',idHorario);
+    // console.log('horarioService::obtenerHorario',idHorario);
 
-    const horario: horario =  await prisma.horario.findUnique({
+    // const horario: horario =  await prisma.horario.findUnique({
+    //     where: {
+    //         id_horario: idHorario,
+    //         estado_auditoria:'1'
+    //     }
+    // });
+
+    // return fromPrismaHorario(horario);
+    const horario: any =  await prisma.horario.findUnique({
         where: {
-            id_horario: idHorario,
-            estado_auditoria:'1'
+            id_horario: idHorario
+        },
+        include: {
+            medico: true
         }
     });
+    return fromPrismaHorario(horario, horario.medico);
 
-    return fromPrismaHorario(horario);
 }
 
 export const modificarHorario = async (idHorario: number, horario:IHorario) => {
-    console.log('horarioService::modificarHorario',idHorario,horario);
     await prisma.horario.update({
         data: toPrismaHorario(horario),
         where:{

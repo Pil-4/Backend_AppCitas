@@ -9,11 +9,9 @@ const horarioBaseSchema = {
     diaSemana: joi_1.default.string()
         .valid('lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'),
     horaInicio: joi_1.default.string()
-        .pattern(new RegExp('^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'))
-        .required(),
+        .pattern(new RegExp('^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$')),
     horaFin: joi_1.default.string()
         .pattern(new RegExp('^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$'))
-        .required()
 };
 exports.insertarHorarioSchema = joi_1.default.object(Object.assign(Object.assign({}, horarioBaseSchema), { diaSemana: horarioBaseSchema.diaSemana.required(), horaInicio: horarioBaseSchema.horaInicio.required(), horaFin: horarioBaseSchema.horaFin.required() }));
 exports.modificarHorarioSchema = joi_1.default.object(Object.assign({}, horarioBaseSchema));
