@@ -14,25 +14,34 @@ export const insertarServicio = async (servicio: IServicio) => {
 }
 
 export const listarServicios = async () => {
-    const servicio: servicio[] = await prisma.servicio.findMany({
-        where: {
-            estado_auditoria: '1'
+    const servicio: any[] = await prisma.servicio.findMany({
+        include: {
+            categoria: true
         }
     });
-    return servicio.map((servicio: servicio)=> fromPrismaServicio(servicio));
+    return servicio.map((servicio: any)=> fromPrismaServicio(servicio, servicio.categoria));
 }
 
 export const obtenerServicio = async (idServicio: number) => {
-    console.log('servicioService::obtenerServicio',idServicio);
+    // console.log('servicioService::obtenerServicio',idServicio);
 
-    const servicio: servicio =  await prisma.servicio.findUnique({
+    // const servicio: servicio =  await prisma.servicio.findUnique({
+    //     where: {
+    //         id_servicio: idServicio,
+    //         estado_auditoria:'1'
+    //     }
+    // });
+
+    // return fromPrismaServicio(servicio);
+    const servicio: any =  await prisma.servicio.findUnique({
         where: {
-            id_servicio: idServicio,
-            estado_auditoria:'1'
+            id_servicio: idServicio
+        },
+        include: {
+            categoria: true
         }
     });
-
-    return fromPrismaServicio(servicio);
+    return fromPrismaServicio(servicio, servicio.categoria);
 }
 
 export const modificarServicio = async (idServicio: number, servicio:IServicio) => {

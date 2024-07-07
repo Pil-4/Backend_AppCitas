@@ -14,25 +14,40 @@ export const insertarCita = async (cita: ICita) => {
 }
 
 export const listarCitas = async () => {
-    const cita: cita[] = await prisma.cita.findMany({
-        where: {
-            estado_auditoria: '1'
+    const cita: any[] = await prisma.cita.findMany({
+        include: {
+            paciente:true,
+            servicio:true,
+            medico:true
+
         }
     });
-    return cita.map((cita: cita)=> fromPrismaCita(cita));
+    return cita.map((cita: any)=> fromPrismaCita(cita, cita.paciente, cita.servicio, cita.medico, cita.categoria));
 }
 
 export const obtenerCita = async (idCita: number) => {
-    console.log('citaService::obtenerCita',idCita);
+    // console.log('citaService::obtenerCita',idCita);
 
-    const cita: cita =  await prisma.cita.findUnique({
+    // const cita: cita =  await prisma.cita.findUnique({
+    //     where: {
+    //         id_cita: idCita,
+    //         estado_auditoria:'1'
+    //     }
+    // });
+
+    // return fromPrismaCita(cita);
+
+    const cita: any =  await prisma.cita.findUnique({
         where: {
-            id_cita: idCita,
-            estado_auditoria:'1'
+            id_cita: idCita
+        },
+        include: {
+            paciente:true,
+            servicio:true,
+            medico:true
         }
     });
-
-    return fromPrismaCita(cita);
+    return fromPrismaCita(cita, cita.paciente, cita.servicio, cita.medico, cita.categoria);
 }
 
 export const modificarCita = async (idCita: number, cita:ICita) => {

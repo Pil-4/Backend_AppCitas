@@ -23,22 +23,35 @@ const insertarCita = (cita) => __awaiter(void 0, void 0, void 0, function* () {
 exports.insertarCita = insertarCita;
 const listarCitas = () => __awaiter(void 0, void 0, void 0, function* () {
     const cita = yield prisma.cita.findMany({
-        where: {
-            estado_auditoria: '1'
+        include: {
+            paciente: true,
+            servicio: true,
+            medico: true
         }
     });
-    return cita.map((cita) => (0, citaMapper_1.fromPrismaCita)(cita));
+    return cita.map((cita) => (0, citaMapper_1.fromPrismaCita)(cita, cita.paciente, cita.servicio, cita.medico, cita.categoria));
 });
 exports.listarCitas = listarCitas;
 const obtenerCita = (idCita) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('citaService::obtenerCita', idCita);
+    // console.log('citaService::obtenerCita',idCita);
+    // const cita: cita =  await prisma.cita.findUnique({
+    //     where: {
+    //         id_cita: idCita,
+    //         estado_auditoria:'1'
+    //     }
+    // });
+    // return fromPrismaCita(cita);
     const cita = yield prisma.cita.findUnique({
         where: {
-            id_cita: idCita,
-            estado_auditoria: '1'
+            id_cita: idCita
+        },
+        include: {
+            paciente: true,
+            servicio: true,
+            medico: true
         }
     });
-    return (0, citaMapper_1.fromPrismaCita)(cita);
+    return (0, citaMapper_1.fromPrismaCita)(cita, cita.paciente, cita.servicio, cita.medico, cita.categoria);
 });
 exports.obtenerCita = obtenerCita;
 const modificarCita = (idCita, cita) => __awaiter(void 0, void 0, void 0, function* () {

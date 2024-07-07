@@ -14,25 +14,34 @@ export const insertarPago = async (pago: IPago) => {
 }
 
 export const listarPagos = async () => {
-    const pago: pago[] = await prisma.pago.findMany({
-        where: {
-            estado_auditoria: '1'
+    const pago: any[] = await prisma.pago.findMany({
+        include: {
+            cita: true
         }
     });
-    return pago.map((pago: pago)=> fromPrismaPago(pago));
+    return pago.map((pago: any)=> fromPrismaPago(pago, pago.cita, pago.paciente, pago.servicio, pago.categoria, pago.medico));
 }
 
-export const obtenerPago = async (idpago: number) => {
-    console.log('pagoService::obtenerPago',idpago);
+export const obtenerPago = async (idPago: number) => {
+    // console.log('pagoService::obtenerPago',idpago);
 
-    const pago: pago =  await prisma.pago.findUnique({
+    // const pago: pago =  await prisma.pago.findUnique({
+    //     where: {
+    //         id_pago: idpago,
+    //         estado_auditoria:'1'
+    //     }
+    // });
+
+    // return fromPrismaPago(pago);
+    const pago: any =  await prisma.pago.findUnique({
         where: {
-            id_pago: idpago,
-            estado_auditoria:'1'
+            id_pago: idPago
+        },
+        include: {
+            cita: true
         }
     });
-
-    return fromPrismaPago(pago);
+    return fromPrismaPago(pago, pago.cita, pago.paciente, pago.servicio, pago.categoria, pago.medico);
 }
 
 export const modificarPago = async (idPago: number, pago:IPago) => {

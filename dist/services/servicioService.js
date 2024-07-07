@@ -23,22 +23,31 @@ const insertarServicio = (servicio) => __awaiter(void 0, void 0, void 0, functio
 exports.insertarServicio = insertarServicio;
 const listarServicios = () => __awaiter(void 0, void 0, void 0, function* () {
     const servicio = yield prisma.servicio.findMany({
-        where: {
-            estado_auditoria: '1'
+        include: {
+            categoria: true
         }
     });
-    return servicio.map((servicio) => (0, servicioMapper_1.fromPrismaServicio)(servicio));
+    return servicio.map((servicio) => (0, servicioMapper_1.fromPrismaServicio)(servicio, servicio.categoria));
 });
 exports.listarServicios = listarServicios;
 const obtenerServicio = (idServicio) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('servicioService::obtenerServicio', idServicio);
+    // console.log('servicioService::obtenerServicio',idServicio);
+    // const servicio: servicio =  await prisma.servicio.findUnique({
+    //     where: {
+    //         id_servicio: idServicio,
+    //         estado_auditoria:'1'
+    //     }
+    // });
+    // return fromPrismaServicio(servicio);
     const servicio = yield prisma.servicio.findUnique({
         where: {
-            id_servicio: idServicio,
-            estado_auditoria: '1'
+            id_servicio: idServicio
+        },
+        include: {
+            categoria: true
         }
     });
-    return (0, servicioMapper_1.fromPrismaServicio)(servicio);
+    return (0, servicioMapper_1.fromPrismaServicio)(servicio, servicio.categoria);
 });
 exports.obtenerServicio = obtenerServicio;
 const modificarServicio = (idServicio, servicio) => __awaiter(void 0, void 0, void 0, function* () {

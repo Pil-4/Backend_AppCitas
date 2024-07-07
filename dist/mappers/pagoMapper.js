@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.toPrismaPago = exports.fromPrismaPago = void 0;
-const fromPrismaPago = (pago) => ({
+const citaMapper_1 = require("./citaMapper");
+const fromPrismaPago = (pago, cita, paciente, servicio, categoria, medico) => ({
     idPago: pago.id_pago,
-    cita: pago.id_cita,
+    cita: (0, citaMapper_1.fromPrismaCita)(cita, paciente, servicio, categoria, medico),
     nombres: pago.nombres,
     apellidoPaterno: pago.apellido_paterno,
     apellidoMaterno: pago.apellido_materno,
@@ -16,7 +17,7 @@ const fromPrismaPago = (pago) => ({
 });
 exports.fromPrismaPago = fromPrismaPago;
 const toPrismaPago = (pago) => ({
-    id_cita: pago.cita,
+    id_cita: pago.cita.idCita,
     nombres: pago.nombres,
     apellido_paterno: pago.apellidoPaterno,
     apellido_materno: pago.apellidoMaterno,

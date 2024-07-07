@@ -23,22 +23,31 @@ const insertarPago = (pago) => __awaiter(void 0, void 0, void 0, function* () {
 exports.insertarPago = insertarPago;
 const listarPagos = () => __awaiter(void 0, void 0, void 0, function* () {
     const pago = yield prisma.pago.findMany({
-        where: {
-            estado_auditoria: '1'
+        include: {
+            cita: true
         }
     });
-    return pago.map((pago) => (0, pagoMapper_1.fromPrismaPago)(pago));
+    return pago.map((pago) => (0, pagoMapper_1.fromPrismaPago)(pago, pago.cita, pago.paciente, pago.servicio, pago.categoria, pago.medico));
 });
 exports.listarPagos = listarPagos;
-const obtenerPago = (idpago) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('pagoService::obtenerPago', idpago);
+const obtenerPago = (idPago) => __awaiter(void 0, void 0, void 0, function* () {
+    // console.log('pagoService::obtenerPago',idpago);
+    // const pago: pago =  await prisma.pago.findUnique({
+    //     where: {
+    //         id_pago: idpago,
+    //         estado_auditoria:'1'
+    //     }
+    // });
+    // return fromPrismaPago(pago);
     const pago = yield prisma.pago.findUnique({
         where: {
-            id_pago: idpago,
-            estado_auditoria: '1'
+            id_pago: idPago
+        },
+        include: {
+            cita: true
         }
     });
-    return (0, pagoMapper_1.fromPrismaPago)(pago);
+    return (0, pagoMapper_1.fromPrismaPago)(pago, pago.cita, pago.paciente, pago.servicio, pago.categoria, pago.medico);
 });
 exports.obtenerPago = obtenerPago;
 const modificarPago = (idPago, pago) => __awaiter(void 0, void 0, void 0, function* () {
