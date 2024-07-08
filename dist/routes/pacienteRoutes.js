@@ -50,20 +50,6 @@ const router = express_1.default.Router();
  *           type: string
  *           description: The address of the patient
  *           example: "123 Main St"
- *         estadoAuditoria:
- *           type: string
- *           description: The audit status of the patient
- *           example: "Active"
- *         fechaCreacion:
- *           type: string
- *           format: date-time
- *           description: The creation date of the record
- *           example: "2024-07-07T19:32:00Z"
- *         fechaModificacion:
- *           type: string
- *           format: date-time
- *           description: The last modification date of the record
- *           example: "2024-07-07T19:32:00Z"
  */
 /**
  * @swagger
