@@ -13,9 +13,6 @@ const router = express_1.default.Router();
  *     Paciente:
  *       type: object
  *       properties:
- *         idPaciente:
- *           type: integer
- *           description: The ID of the patient
  *         dni:
  *           type: string
  *           description: The DNI of the patient
@@ -61,10 +58,12 @@ const router = express_1.default.Router();
  *           type: string
  *           format: date-time
  *           description: The creation date of the record
+ *           example: "2024-07-07T19:32:00Z"
  *         fechaModificacion:
  *           type: string
  *           format: date-time
  *           description: The last modification date of the record
+ *           example: "2024-07-07T19:32:00Z"
  */
 /**
  * @swagger
@@ -78,18 +77,6 @@ const router = express_1.default.Router();
  *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/Paciente'
- *           examples:
- *             example:
- *               value:
- *                 dni: "12345678"
- *                 nombres: "Juan"
- *                 apellidoPaterno: "Perez"
- *                 apellidoMaterno: "Gomez"
- *                 correo: "juan.perez@example.com"
- *                 celular: "987654321"
- *                 fechaNacimiento: "1999-06-18T00:00:00Z"
- *                 sexo: "M"
- *                 direccion: "123 Main St"
  *     responses:
  *       201:
  *         description: Patient created successfully
@@ -153,18 +140,6 @@ router.get('/:id', pacienteController_1.obtenerPaciente);
  *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/Paciente'
- *           examples:
- *             example:
- *               value:
- *                 dni: "12345678"
- *                 nombres: "Juan"
- *                 apellidoPaterno: "Perez"
- *                 apellidoMaterno: "Gomez"
- *                 correo: "juan.perez@example.com"
- *                 celular: "987654321"
- *                 fechaNacimiento: "1999-06-18T00:00:00Z"
- *                 sexo: "M"
- *                 direccion: "123 Main St"
  *     responses:
  *       200:
  *         description: Patient updated successfully
