@@ -3,7 +3,8 @@ import { IMedico } from "../models/Medico"
 
 export const fromPrismaMedico = (medico: medico): any=> ({
     idMedico: medico.id_medico,
-    dni: medico.dni,
+    tipoDocumento: medico.tipo_documento,
+    numeroDocumento: medico.numero_documento,
     nombres: medico.nombres,
     apellidoPaterno: medico.apellido_paterno,
     apellidoMaterno: medico.apellido_materno,
@@ -12,7 +13,8 @@ export const fromPrismaMedico = (medico: medico): any=> ({
 });
 
 export const toPrismaMedico = (medico: IMedico): any => ({
-    dni: medico.dni,
+    tipo_documento: medico.tipoDocumento,
+    numero_documento: medico.numeroDocumento,
     nombres: medico.nombres,
     apellido_paterno: medico.apellidoPaterno,
     apellido_materno: medico.apellidoMaterno,

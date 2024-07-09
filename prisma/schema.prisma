@@ -9,7 +9,8 @@ datasource db {
 
 model paciente {
   id_paciente        Int       @id @default(autoincrement())
-  dni                String    @db.Char(8)
+  tipo_documento     String    @db.VarChar(100)
+  numero_documento   String    @db.VarChar(15)
   nombres            String    @db.VarChar(100)
   apellido_paterno   String    @db.VarChar(100)
   apellido_materno   String    @db.VarChar(100)
@@ -44,7 +45,8 @@ model cita {
 
 model medico {
   id_medico          Int       @id @default(autoincrement())
-  dni                String    @db.VarChar(8)
+  tipo_documento     String    @db.VarChar(100)
+  numero_documento   String    @db.VarChar(15)
   nombres            String    @db.VarChar(100)
   apellido_paterno   String    @db.VarChar(100)
   apellido_materno   String    @db.VarChar(100)
@@ -106,4 +108,39 @@ model pago {
   fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)
   fecha_modificacion DateTime? @db.Timestamp(6)
   cita               cita      @relation(fields: [id_cita], references: [id_cita], onDelete: NoAction, onUpdate: NoAction, map: "fk_pago_cita")
+}
+
+model notificacion {
+  id_notificacion    Int       @id @default(autoincrement())
+  id_usuario         Int
+  mensaje            String    @db.VarChar(2000)
+  fecha_notificaci_n DateTime  @map("fecha_notificación") @db.Timestamptz(6)
+  estado_auditoria   String    @default(dbgenerated("1")) @db.Char(1)
+  fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime? @db.Timestamp(6)
+  usuario            usuario   @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction, map: "fk_notificacion_usuario")
+}
+
+model perfil {
+  id_perfil          Int       @id @default(autoincrement())
+  descripcion        String    @db.VarChar(100)
+  estado_auditoria   String    @default(dbgenerated("1")) @db.Char(1)
+  fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime? @db.Timestamp(6)
+  usuario            usuario[]
+}
+
+model usuario {
+  id_usuario         Int            @id @default(autoincrement())
+  id_perfil          Int
+  nombres            String         @db.VarChar(100)
+  nombre_usuario     String         @db.VarChar(100)
+  apellido_paterno   String         @db.VarChar(150)
+  apellido_materno   String         @db.VarChar(150)
+  contrasena         String         @db.VarChar(100)
+  estado_auditoria   String         @default(dbgenerated("1")) @db.Char(1)
+  fecha_creacion     DateTime       @default(now()) @db.Timestamp(6)
+  fecha_modificacion DateTime?      @db.Timestamp(6)
+  notificacion       notificacion[]
+  perfil             perfil         @relation(fields: [id_perfil], references: [id_perfil], onDelete: NoAction, onUpdate: NoAction, map: "fk_usuario_perfil")
 }

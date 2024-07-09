@@ -1,10 +1,17 @@
 import Joi from "joi";
 
 const medicoBaseSchema = {
-    dni: Joi.string()
-        .pattern(new RegExp('^[0-9]{8}$'))
-        .max(8)
-        .min(8),
+    tipoDocumento: Joi.string()
+        .valid('DNI', 'CE', 'Pasaporte'),
+    numeroDocumento: Joi.when('tipoDocumento', {
+            is: 'DNI',
+            then: Joi.string().pattern(new RegExp('^[0-9]{8}$')).required(),
+            otherwise: Joi.when('tipoDocumento', {
+                is: 'CE',
+                then: Joi.string().pattern(new RegExp('^[0-9A-Za-z]{12}$')).required(),
+                otherwise: Joi.string().pattern(new RegExp('^[0-9A-Za-z]{8,15}$')).required()
+        })
+    }),
     nombres: Joi.string()
         .max(100),
     apellidoPaterno: Joi.string()
@@ -19,7 +26,8 @@ const medicoBaseSchema = {
 
 export const insertarMedicoSchema = Joi.object({
     ...medicoBaseSchema,
-    dni: medicoBaseSchema.dni.required(),
+    tipoDocumento: medicoBaseSchema.tipoDocumento.required(),
+    numeroDocumento: medicoBaseSchema.numeroDocumento.required(),
     nombres: medicoBaseSchema.nombres.required(),
     apellidoPaterno: medicoBaseSchema.apellidoPaterno.required(),
     apellidoMaterno: medicoBaseSchema.apellidoMaterno.required(),

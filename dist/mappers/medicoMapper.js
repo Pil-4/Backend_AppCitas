@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.toPrismaMedico = exports.fromPrismaMedico = void 0;
 const fromPrismaMedico = (medico) => ({
     idMedico: medico.id_medico,
-    dni: medico.dni,
+    tipoDocumento: medico.tipo_documento,
+    numeroDocumento: medico.numero_documento,
     nombres: medico.nombres,
     apellidoPaterno: medico.apellido_paterno,
     apellidoMaterno: medico.apellido_materno,
@@ -12,7 +13,8 @@ const fromPrismaMedico = (medico) => ({
 });
 exports.fromPrismaMedico = fromPrismaMedico;
 const toPrismaMedico = (medico) => ({
-    dni: medico.dni,
+    tipo_documento: medico.tipoDocumento,
+    numero_documento: medico.numeroDocumento,
     nombres: medico.nombres,
     apellido_paterno: medico.apellidoPaterno,
     apellido_materno: medico.apellidoMaterno,

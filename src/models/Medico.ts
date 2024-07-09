@@ -1,6 +1,7 @@
 export interface IMedico {
     idMedico: number;
-    dni: string;
+    tipoDocumento: string;
+    numeroDocumento: string;
     nombres: string;
     apellidoPaterno: string;
     apellidoMaterno: string;
