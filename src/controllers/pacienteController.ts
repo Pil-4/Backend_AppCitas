@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import * as pacienteService from "../services/pacienteService";
 import { ResponseModel } from "../models/ResponseModel";
-import { insertarpacienteSchema, modificarpacienteSchema } from "../schemas/pacienteShema";
+import { insertarpacienteSchema, modificarpacienteSchema } from "../schemas/pacienteSchema";
 
 
 export const insertarPaciente = async (req: Request, res: Response) => {

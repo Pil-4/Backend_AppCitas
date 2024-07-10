@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import * as medicoService from "../services/medicoService";
 import { ResponseModel } from "../models/ResponseModel";
-import { insertarMedicoSchema, modificarMedicoSchema } from "../schemas/medicoShema";
+import { insertarMedicoSchema, modificarMedicoSchema } from "../schemas/medicoSchema";
 
 export const insertarMedico = async (req: Request, res: Response) => {
     console.log('medicoController::insertarMedico');

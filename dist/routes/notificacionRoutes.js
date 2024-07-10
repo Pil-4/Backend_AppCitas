@@ -1,8 +1,11 @@
-import { eliminarNotificacion, insertarNotificacion, listarNotificacions, modificarNotificacion, obtenerNotificacion } from "../controllers/notificacionController";
-import express from 'express';
-
-const router = express.Router();
-
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const notificacionController_1 = require("../controllers/notificacionController");
+const express_1 = __importDefault(require("express"));
+const router = express_1.default.Router();
 /**
  * @swagger
  * components:
@@ -11,7 +14,7 @@ const router = express.Router();
  *       type: object
  *       properties:
  *         usuario:
- *           $ref: '#/components/schemas/Usuario' 
+ *           $ref: '#/components/schemas/Usuario'
  *         mensaje:
  *           type: string
  *           description: Mensaje de la notificación
@@ -21,7 +24,7 @@ const router = express.Router();
  *           format: date-time
  *           description: Fecha y hora de la notificación
  *           example: "2024-07-10T15:30:00Z"
- *     Usuario:  
+ *     Usuario:
  *       type: object
  *       properties:
  *         idUsuario:
@@ -58,7 +61,6 @@ const router = express.Router();
  *           description: Descripción del perfil
  *           example: "Administrador"
  */
-
 /**
  * @swagger
  * /api/v1/notificacion:
@@ -79,8 +81,7 @@ const router = express.Router();
  *             schema:
  *               $ref: '#/components/schemas/Notificacion'
  */
-router.post('/', insertarNotificacion);
-
+router.post('/', notificacionController_1.insertarNotificacion);
 /**
  * @swagger
  * /api/v1/notificacion:
@@ -97,8 +98,7 @@ router.post('/', insertarNotificacion);
  *               items:
  *                 $ref: '#/components/schemas/Notificacion'
  */
-router.get('/', listarNotificacions);
-
+router.get('/', notificacionController_1.listarNotificacions);
 /**
  * @swagger
  * /api/v1/notificacion/{id}:
@@ -122,8 +122,7 @@ router.get('/', listarNotificacions);
  *       404:
  *         description: Notificación no encontrada
  */
-router.get('/:id', obtenerNotificacion);
-
+router.get('/:id', notificacionController_1.obtenerNotificacion);
 /**
  * @swagger
  * /api/v1/notificacion/{id}:
@@ -153,8 +152,7 @@ router.get('/:id', obtenerNotificacion);
  *       404:
  *         description: Notificación no encontrada
  */
-router.put('/:id', modificarNotificacion);
-
+router.put('/:id', notificacionController_1.modificarNotificacion);
 /**
  * @swagger
  * /api/v1/notificacion/{id}:
@@ -174,6 +172,6 @@ router.put('/:id', modificarNotificacion);
  *       404:
  *         description: Notificación no encontrada
  */
-router.delete('/:id', eliminarNotificacion);
-
-export default router;
+router.delete('/:id', notificacionController_1.eliminarNotificacion);
+exports.default = router;
+//# sourceMappingURL=notificacionRoutes.js.map

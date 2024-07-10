@@ -32,73 +32,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.eliminarMedico = exports.modificarMedico = exports.obtenerMedico = exports.listarMedicos = exports.insertarMedico = void 0;
-const medicoService = __importStar(require("../services/medicoService"));
+exports.eliminarNotificacion = exports.modificarNotificacion = exports.obtenerNotificacion = exports.listarNotificacions = exports.insertarNotificacion = void 0;
+const notificacionService = __importStar(require("../services/norificacionService"));
 const ResponseModel_1 = require("../models/ResponseModel");
-const medicoSchema_1 = require("../schemas/medicoSchema");
-const insertarMedico = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('medicoController::insertarMedico');
+const insertarNotificacion = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('notificacionController::insertarNotificacion');
     try {
-        const { error, value: validatedMedico } = medicoSchema_1.insertarMedicoSchema.validate(req.body);
-        if (error) {
-            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
-        }
-        const response = yield medicoService.insertarMedico(validatedMedico);
-        res.status(201).json(ResponseModel_1.ResponseModel.success(null, response));
-    }
-    catch (error) {
-        console.error(error.message);
-        res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
-    }
-});
-exports.insertarMedico = insertarMedico;
-const listarMedicos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('medicoController::listarMedicos');
-    try {
-        const medico = yield medicoService.listarMedicos();
-        res.status(200).json(ResponseModel_1.ResponseModel.success(medico));
-    }
-    catch (error) {
-        console.error(error.message);
-        res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
-    }
-});
-exports.listarMedicos = listarMedicos;
-const obtenerMedico = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('medicoController::obtenerMedico');
-    try {
-        const { id } = req.params;
-        const medico = yield medicoService.obtenerMedico(Number(id));
-        res.status(200).json(ResponseModel_1.ResponseModel.success(medico));
-    }
-    catch (error) {
-        console.error(error.message);
-        res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
-    }
-});
-exports.obtenerMedico = obtenerMedico;
-const modificarMedico = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('medicoController::modificarMedico');
-    try {
-        const { id } = req.params;
-        const { error, value: validatedMedico } = medicoSchema_1.modificarMedicoSchema.validate(req.body);
-        if (error) {
-            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
-        }
-        const response = yield medicoService.modificarMedico(Number(id), validatedMedico);
-        res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
-    }
-    catch (error) {
-        console.error('Error al modificar médico:', error.message);
-        res.status(500).json(ResponseModel_1.ResponseModel.error("Error interno del servidor"));
-    }
-});
-exports.modificarMedico = modificarMedico;
-const eliminarMedico = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('medicoController::eliminarMedico');
-    try {
-        const { id } = req.params;
-        const response = yield medicoService.eliminarMedico(Number(id));
+        const response = yield notificacionService.insertarNotificacion(req.body);
         res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {
@@ -106,5 +46,56 @@ const eliminarMedico = (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
     }
 });
-exports.eliminarMedico = eliminarMedico;
-//# sourceMappingURL=medicoController.js.map
+exports.insertarNotificacion = insertarNotificacion;
+const listarNotificacions = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('notificacionController::listarNotificacions');
+    try {
+        const notificacion = yield notificacionService.listarNotificacions();
+        res.status(200).json(ResponseModel_1.ResponseModel.success(notificacion));
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
+    }
+});
+exports.listarNotificacions = listarNotificacions;
+const obtenerNotificacion = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('notificacionController::obtenernotificacion');
+    try {
+        const { id } = req.params;
+        const notificacion = yield notificacionService.obtenerNotificacion(Number(id));
+        res.status(200).json(ResponseModel_1.ResponseModel.success(notificacion));
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
+    }
+});
+exports.obtenerNotificacion = obtenerNotificacion;
+const modificarNotificacion = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('notificacionController::modificarNotificacion');
+    try {
+        const { id } = req.params;
+        const response = yield notificacionService.modificarNotificacion(Number(id), req.body);
+        res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
+    }
+});
+exports.modificarNotificacion = modificarNotificacion;
+const eliminarNotificacion = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('notificacionController::eliminarNotificacion');
+    try {
+        const { id } = req.params;
+        const response = yield notificacionService.eliminarNotificacion(Number(id));
+        res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
+    }
+});
+exports.eliminarNotificacion = eliminarNotificacion;
+//# sourceMappingURL=notificacionController.js.map

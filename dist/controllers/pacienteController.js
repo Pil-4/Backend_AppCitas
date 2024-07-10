@@ -35,11 +35,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.eliminarPaciente = exports.modificarPaciente = exports.obtenerPaciente = exports.listarPacientes = exports.insertarPaciente = void 0;
 const pacienteService = __importStar(require("../services/pacienteService"));
 const ResponseModel_1 = require("../models/ResponseModel");
-const pacienteShema_1 = require("../schemas/pacienteShema");
+const pacienteSchema_1 = require("../schemas/pacienteSchema");
 const insertarPaciente = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('pacienteController::insertarPaciente');
     try {
-        const { error, value: validatedPaciente } = pacienteShema_1.insertarpacienteSchema.validate(req.body);
+        const { error, value: validatedPaciente } = pacienteSchema_1.insertarpacienteSchema.validate(req.body);
         if (error) {
             return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
         }
@@ -81,7 +81,7 @@ const modificarPaciente = (req, res) => __awaiter(void 0, void 0, void 0, functi
     console.log('pacienteController::modificarPaciente');
     try {
         const { id } = req.params;
-        const { error, value: validatedPaciente } = pacienteShema_1.modificarpacienteSchema.validate(req.body);
+        const { error, value: validatedPaciente } = pacienteSchema_1.modificarpacienteSchema.validate(req.body);
         if (error) {
             return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
         }
