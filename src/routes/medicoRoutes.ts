@@ -10,11 +10,14 @@ const router = express.Router();
  *     Medico:
  *       type: object
  *       properties:
- *         dni:
+ *         tipoDocumento:
  *           type: string
- *           maxLength: 8
- *           description: DNI del médico
- *           example: "12345678" 
+ *           description: tipo del documento del médico
+ *           example: "dni" 
+ *         numeroDocumento:
+ *           type: string
+ *           description: numero de documento del medico
+ *           example: "12345678"
  *         nombres: 
  *           type: string
  *           maxLength: 100

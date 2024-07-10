@@ -35,15 +35,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.eliminarMedico = exports.modificarMedico = exports.obtenerMedico = exports.listarMedicos = exports.insertarMedico = void 0;
 const medicoService = __importStar(require("../services/medicoService"));
 const ResponseModel_1 = require("../models/ResponseModel");
+const medicoShema_1 = require("../schemas/medicoShema");
 const insertarMedico = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('medicoController::insertarMedico');
     try {
-        const response = yield medicoService.insertarMedico(req.body);
-        res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
+        // Valida los datos de entrada con Joi
+        const { error, value: validatedMedico } = medicoShema_1.insertarMedicoSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
+        }
+        const response = yield medicoService.insertarMedico(validatedMedico);
+        res.status(201).json(ResponseModel_1.ResponseModel.success(null, response));
     }
-    catch (error) {
-        console.error(error.message);
-        res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
+    catch (error) { // Manejo de errores tipado
+        console.error('Error al insertar médico:', error.message);
+        res.status(500).json(ResponseModel_1.ResponseModel.error("Error interno del servidor"));
     }
 });
 exports.insertarMedico = insertarMedico;
@@ -76,12 +82,16 @@ const modificarMedico = (req, res) => __awaiter(void 0, void 0, void 0, function
     console.log('medicoController::modificarMedico');
     try {
         const { id } = req.params;
-        const response = yield medicoService.modificarMedico(Number(id), req.body);
+        const { error, value: validatedMedico } = medicoShema_1.modificarMedicoSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
+        }
+        const response = yield medicoService.modificarMedico(Number(id), validatedMedico);
         res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {
-        console.error(error.message);
-        res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
+        console.error('Error al modificar médico:', error.message);
+        res.status(500).json(ResponseModel_1.ResponseModel.error("Error interno del servidor"));
     }
 });
 exports.modificarMedico = modificarMedico;

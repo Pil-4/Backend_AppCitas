@@ -2,7 +2,11 @@ import Joi from "joi";
 
 const medicoBaseSchema = {
     tipoDocumento: Joi.string()
-        .valid('DNI', 'CE', 'Pasaporte'),
+        .valid('DNI', 'CE', 'Pasaporte')
+        .messages({
+            'any.only': '"tipoDocumento" debe ser uno de [DNI, CE, Pasaporte]',
+            'any.required': '"tipoDocumento" es un campo obligatorio',
+        }),
     numeroDocumento: Joi.when('tipoDocumento', {
             is: 'DNI',
             then: Joi.string().pattern(new RegExp('^[0-9]{8}$')).required(),
