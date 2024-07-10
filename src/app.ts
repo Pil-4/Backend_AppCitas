@@ -9,6 +9,7 @@ import pagoRoutes from './routes/pagoRoutes';
 import horarioRoutes from './routes/horarioRoutes';
 import usuarioRoutes from './routes/usuarioRoutes';
 import perfilRoutes from './routes/perfilRoutes';
+import notificacionRoutes from './routes/notificacionRoutes';
 import swaggerSetup from './swagger';
 
 const app: Application = express();
@@ -26,6 +27,7 @@ app.use('/api/v1/pago', pagoRoutes);
 app.use('/api/v1/horario', horarioRoutes);
 app.use('/api/v1/usuario', usuarioRoutes);
 app.use('/api/v1/perfil', perfilRoutes);
+app.use('/api/v1/notificacion', notificacionRoutes);
 
 // Swagger setup
 swaggerSetup(app);
