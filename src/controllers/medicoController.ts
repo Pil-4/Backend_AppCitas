@@ -12,9 +12,9 @@ export const insertarMedico = async (req: Request, res: Response) => {
         }
         const response = await medicoService.insertarMedico(validatedMedico);
         res.status(201).json(ResponseModel.success(null, response)); 
-    } catch (error: any) { 
-        console.error('Error al insertar médico:', error.message);
-        res.status(500).json(ResponseModel.error("Error interno del servidor"));
+    } catch (error: any) {
+        console.error(error.message);
+        res.status(500).json(ResponseModel.error(error.message));
     }
 };
 export const listarMedicos = async (req: Request, res: Response) => {

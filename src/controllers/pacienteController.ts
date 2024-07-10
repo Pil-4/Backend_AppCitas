@@ -1,17 +1,23 @@
 import { Request, Response } from "express"
 import * as pacienteService from "../services/pacienteService";
 import { ResponseModel } from "../models/ResponseModel";
+import { insertarpacienteSchema, modificarpacienteSchema } from "../schemas/pacienteShema";
+
 
 export const insertarPaciente = async (req: Request, res: Response) => {
     console.log('pacienteController::insertarPaciente');
     try {
-        const response = await pacienteService.insertarPaciente(req.body);
-        res.status(200).json(ResponseModel.success(null,response));
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).json(ResponseModel.error(error.message));
+        const { error, value: validatedPaciente } = insertarpacienteSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel.error(error.details[0].message));
+        }
+        const response = await pacienteService.insertarPaciente(validatedPaciente);
+        res.status(201).json(ResponseModel.success(null, response));
+    } catch (error: any) {
+        console.error('Error al insertar paciente:', error.message);
+        res.status(500).json(ResponseModel.error("Error interno del servidor"));
     }
-}
+};
 
 export const listarPacientes = async (req: Request, res: Response) => {
     console.log('pacienteController::listarPacientes');
@@ -41,14 +47,17 @@ export const modificarPaciente = async (req: Request, res: Response) => {
     console.log('pacienteController::modificarPaciente');
     try {
         const { id } = req.params;
-        const response = await pacienteService.modificarPaciente(Number(id),req.body)
-        res.status(200).json(ResponseModel.success(null,response));
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).json(ResponseModel.error(error.message));
+        const { error, value: validatedPaciente } = modificarpacienteSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel.error(error.details[0].message));
+        }
+        const response = await pacienteService.modificarPaciente(Number(id), validatedPaciente);
+        res.status(200).json(ResponseModel.success(null, response));
+    } catch (error: any) {
+        console.error('Error al modificar paciente:', error.message);
+        res.status(500).json(ResponseModel.error("Error interno del servidor"));
     }
-}
-
+};
 export const eliminarPaciente = async (req: Request, res: Response) => {
     console.log('pacienteController::eliminarPaciente');
     try {

@@ -98,7 +98,8 @@ model pago {
   nombres            String    @db.VarChar(250)
   apellido_paterno   String    @db.VarChar(100)
   apellido_materno   String    @db.VarChar(100)
-  dni                String    @db.Char(8)
+  tipo_documento     String    @db.VarChar(100)
+  numero_documento   String    @db.VarChar(15)
   fecha_pago         DateTime  @db.Time(6)
   tipo_de_pago       String    @db.VarChar(100)
   subtotal_pago      Decimal   @db.Decimal(10, 2)
@@ -114,7 +115,7 @@ model notificacion {
   id_notificacion    Int       @id @default(autoincrement())
   id_usuario         Int
   mensaje            String    @db.VarChar(2000)
-  fecha_notificaci_n DateTime  @map("fecha_notificación") @db.Timestamptz(6)
+  fecha_notificacion DateTime  @db.Timestamptz(6)
   estado_auditoria   String    @default(dbgenerated("1")) @db.Char(1)
   fecha_creacion     DateTime  @default(now()) @db.Timestamp(6)
   fecha_modificacion DateTime? @db.Timestamp(6)

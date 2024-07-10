@@ -32,73 +32,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.eliminarMedico = exports.modificarMedico = exports.obtenerMedico = exports.listarMedicos = exports.insertarMedico = void 0;
-const medicoService = __importStar(require("../services/medicoService"));
+exports.eliminarPerfil = exports.modificarPerfil = exports.obtenerPerfil = exports.listarPerfils = exports.insertarPerfil = void 0;
+const perfilService = __importStar(require("../services/perfilService"));
 const ResponseModel_1 = require("../models/ResponseModel");
-const medicoShema_1 = require("../schemas/medicoShema");
-const insertarMedico = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('medicoController::insertarMedico');
+const insertarPerfil = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('perfilController::insertarPerfil');
     try {
-        const { error, value: validatedMedico } = medicoShema_1.insertarMedicoSchema.validate(req.body);
-        if (error) {
-            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
-        }
-        const response = yield medicoService.insertarMedico(validatedMedico);
-        res.status(201).json(ResponseModel_1.ResponseModel.success(null, response));
-    }
-    catch (error) {
-        console.error(error.message);
-        res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
-    }
-});
-exports.insertarMedico = insertarMedico;
-const listarMedicos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('medicoController::listarMedicos');
-    try {
-        const medico = yield medicoService.listarMedicos();
-        res.status(200).json(ResponseModel_1.ResponseModel.success(medico));
-    }
-    catch (error) {
-        console.error(error.message);
-        res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
-    }
-});
-exports.listarMedicos = listarMedicos;
-const obtenerMedico = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('medicoController::obtenerMedico');
-    try {
-        const { id } = req.params;
-        const medico = yield medicoService.obtenerMedico(Number(id));
-        res.status(200).json(ResponseModel_1.ResponseModel.success(medico));
-    }
-    catch (error) {
-        console.error(error.message);
-        res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
-    }
-});
-exports.obtenerMedico = obtenerMedico;
-const modificarMedico = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('medicoController::modificarMedico');
-    try {
-        const { id } = req.params;
-        const { error, value: validatedMedico } = medicoShema_1.modificarMedicoSchema.validate(req.body);
-        if (error) {
-            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
-        }
-        const response = yield medicoService.modificarMedico(Number(id), validatedMedico);
-        res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
-    }
-    catch (error) {
-        console.error('Error al modificar médico:', error.message);
-        res.status(500).json(ResponseModel_1.ResponseModel.error("Error interno del servidor"));
-    }
-});
-exports.modificarMedico = modificarMedico;
-const eliminarMedico = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('medicoController::eliminarMedico');
-    try {
-        const { id } = req.params;
-        const response = yield medicoService.eliminarMedico(Number(id));
+        const response = yield perfilService.insertarPerfil(req.body);
         res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {
@@ -106,5 +46,56 @@ const eliminarMedico = (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
     }
 });
-exports.eliminarMedico = eliminarMedico;
-//# sourceMappingURL=medicoController.js.map
+exports.insertarPerfil = insertarPerfil;
+const listarPerfils = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('perfilController::listarPerfils');
+    try {
+        const perfil = yield perfilService.listarPerfils();
+        res.status(200).json(ResponseModel_1.ResponseModel.success(perfil));
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
+    }
+});
+exports.listarPerfils = listarPerfils;
+const obtenerPerfil = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('perfilController::obtenerPerfil');
+    try {
+        const { id } = req.params;
+        const perfil = yield perfilService.obtenerPerfil(Number(id));
+        res.status(200).json(ResponseModel_1.ResponseModel.success(perfil));
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
+    }
+});
+exports.obtenerPerfil = obtenerPerfil;
+const modificarPerfil = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('perfilController::modificarPerfil');
+    try {
+        const { id } = req.params;
+        const response = yield perfilService.modificarPerfil(Number(id), req.body);
+        res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
+    }
+});
+exports.modificarPerfil = modificarPerfil;
+const eliminarPerfil = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('perfilController::eliminarPerfil');
+    try {
+        const { id } = req.params;
+        const response = yield perfilService.eliminarPerfil(Number(id));
+        res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
+    }
+    catch (error) {
+        console.error(error.message);
+        res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
+    }
+});
+exports.eliminarPerfil = eliminarPerfil;
+//# sourceMappingURL=perfilController.js.map

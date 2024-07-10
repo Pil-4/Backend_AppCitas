@@ -7,10 +7,17 @@ const pagoBaseSchema = {
         .max(150),
     apellidoMaterno: Joi.string()
         .max(150),
-    dni: Joi.string()
-        .pattern(new RegExp('^[0-9]{8}$'))
-        .max(8)
-        .min(8),
+    tipoDocumento: Joi.string()
+        .valid('DNI', 'CE', 'Pasaporte'),
+    numeroDocumento: Joi.when('tipoDocumento', {
+        is: 'DNI',
+        then: Joi.string().pattern(new RegExp('^[0-9]{8}$')).required(),
+        otherwise: Joi.when('tipoDocumento', {
+            is: 'CE',
+            then: Joi.string().pattern(new RegExp('^[0-9A-Za-z]{12}$')).required(),
+            otherwise: Joi.string().pattern(new RegExp('^[0-9A-Za-z]{8,15}$')).required()
+        })
+    }),
     fechaPago: Joi.date(),
     tipoDePago: Joi.string()
         .valid('efectivo', 'tarjeta', 'transferencia'),
@@ -24,7 +31,8 @@ export const insertarPagoSchema = Joi.object({
     nombres: pagoBaseSchema.nombres.required(),
     apellidoPaterno: pagoBaseSchema.apellidoPaterno.required(),
     apellidoMaterno: pagoBaseSchema.apellidoMaterno.required(),
-    dni: pagoBaseSchema.dni.required(),
+    tipoDocumento: pagoBaseSchema.tipoDocumento.required(),
+    numeroDocumento: pagoBaseSchema.numeroDocumento.required(),
     fechaPago: pagoBaseSchema.fechaPago.required(),
     tipoDePago: pagoBaseSchema.tipoDePago.required(),
     subtotalPago: pagoBaseSchema.subtotalPago.required(),

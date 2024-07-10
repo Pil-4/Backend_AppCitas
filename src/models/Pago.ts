@@ -6,7 +6,8 @@ export interface IPago {
     nombres: string;
     apellidoPaterno: string;
     apellidoMaterno: string;
-    dni: string;
+    tipoDocumento: string;
+    numeroDocumento: string;
     fechaPago:Date;
     tipoDePago: string;
     subtotalPago: number;

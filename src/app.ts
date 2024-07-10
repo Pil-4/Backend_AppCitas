@@ -7,6 +7,8 @@ import citaRoutes from './routes/citaRoutes';
 import categoriaRoutes from './routes/categoriaRoutes';
 import pagoRoutes from './routes/pagoRoutes';
 import horarioRoutes from './routes/horarioRoutes';
+import usuarioRoutes from './routes/usuarioRoutes';
+import perfilRoutes from './routes/perfilRoutes';
 import swaggerSetup from './swagger';
 
 const app: Application = express();
@@ -22,6 +24,8 @@ app.use('/api/v1/cita', citaRoutes);
 app.use('/api/v1/categoria', categoriaRoutes);
 app.use('/api/v1/pago', pagoRoutes);
 app.use('/api/v1/horario', horarioRoutes);
+app.use('/api/v1/usuario', usuarioRoutes);
+app.use('/api/v1/perfil', perfilRoutes);
 
 // Swagger setup
 swaggerSetup(app);
