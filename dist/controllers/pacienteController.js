@@ -44,11 +44,11 @@ const insertarPaciente = (req, res) => __awaiter(void 0, void 0, void 0, functio
             return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
         }
         const response = yield pacienteService.insertarPaciente(validatedPaciente);
-        res.status(201).json(ResponseModel_1.ResponseModel.success(null, response));
+        res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {
-        console.error('Error al insertar paciente:', error.message);
-        res.status(500).json(ResponseModel_1.ResponseModel.error("Error interno del servidor"));
+        console.error(error.message);
+        res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
     }
 });
 exports.insertarPaciente = insertarPaciente;

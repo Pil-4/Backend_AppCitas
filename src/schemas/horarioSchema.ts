@@ -2,7 +2,7 @@ import Joi from "joi";
 
 const horarioBaseSchema = {
     diaSemana: Joi.string()
-        .valid('lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'),
+        .valid('LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'),
     horaInicio: Joi.string()
         .pattern(new RegExp('^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$')),
     horaFin: Joi.string()

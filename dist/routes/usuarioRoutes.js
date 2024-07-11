@@ -13,6 +13,9 @@ const router = express_1.default.Router();
  *     Usuario:
  *       type: object
  *       properties:
+ *         idUsuario:
+ *           type: integer
+ *           readOnly: true
  *         perfil:
  *           type: object
  *           properties:

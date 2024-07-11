@@ -16,13 +16,16 @@ export const insertarCita = async (cita: ICita) => {
 export const listarCitas = async () => {
     const cita: any[] = await prisma.cita.findMany({
         include: {
-            paciente:true,
-            servicio:true,
-            medico:true
-
+            paciente: true,
+            servicio: { // <-- Incluir la categoría a través de servicio
+                include: {
+                categoria: true
+                }
+            },
+            medico: true
         }
     });
-    return cita.map((cita: any)=> fromPrismaCita(cita, cita.paciente, cita.servicio, cita.medico, cita.categoria));
+    return cita.map((cita: any)=> fromPrismaCita(cita, cita.paciente, cita.servicio, cita.servicio.categoria, cita.medico));
 }
 
 export const obtenerCita = async (idCita: number) => {
@@ -42,12 +45,16 @@ export const obtenerCita = async (idCita: number) => {
             id_cita: idCita
         },
         include: {
-            paciente:true,
-            servicio:true,
-            medico:true
+            paciente: true,
+            servicio: { // <-- Incluir la categoría a través de servicio
+                include: {
+                categoria: true
+                }
+            },
+            medico: true
         }
     });
-    return fromPrismaCita(cita, cita.paciente, cita.servicio, cita.medico, cita.categoria);
+    return fromPrismaCita(cita, cita.paciente, cita.servicio, cita.servicio.categoria, cita.medico);
 }
 
 export const modificarCita = async (idCita: number, cita:ICita) => {

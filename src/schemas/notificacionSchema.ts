@@ -8,13 +8,13 @@ const notificacionBaseSchema = {
         .regex(/^\d{2}\/\d{2}\/\d{4}$/), 
 };
 
-export const insertarnotificacionSchema = Joi.object({
+export const insertarNotificacionSchema = Joi.object({
     ...notificacionBaseSchema,
     mensaje: notificacionBaseSchema.mensaje.required(),
     fechaNotificacion: notificacionBaseSchema.fechaNotificacion.required()
 });
 
-export const modificarnotificacionSchema = Joi.object({
+export const modificarNotificacionSchema = Joi.object({
     ...notificacionBaseSchema
 });
 

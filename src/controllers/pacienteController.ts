@@ -12,10 +12,10 @@ export const insertarPaciente = async (req: Request, res: Response) => {
             return res.status(400).json(ResponseModel.error(error.details[0].message));
         }
         const response = await pacienteService.insertarPaciente(validatedPaciente);
-        res.status(201).json(ResponseModel.success(null, response));
+        res.status(200).json(ResponseModel.success(null, response));
     } catch (error: any) {
-        console.error('Error al insertar paciente:', error.message);
-        res.status(500).json(ResponseModel.error("Error interno del servidor"));
+        console.error(error.message);
+        res.status(500).json(ResponseModel.error(error.message));
     }
 };
 

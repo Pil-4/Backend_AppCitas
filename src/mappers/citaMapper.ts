@@ -1,4 +1,4 @@
-import { categoria, cita, medico, paciente, servicio } from "@prisma/client";
+import { categoria, cita, paciente, servicio, medico } from "@prisma/client";
 import { ICita } from "../models/Cita";
 import { fromPrismaPaciente } from "./pacienteMapper";
 import { fromPrismaServicio } from "./servicioMapper";

@@ -26,7 +26,7 @@ export const toPrismaPago = (pago: IPago): any => ({
     tipo_documento: pago.tipoDocumento,
     numero_documento: pago.numeroDocumento,
     fecha_pago: pago.fechaPago,
-    tipo_de_Pago: pago.tipoDePago,
+    tipo_de_pago: pago.tipoDePago,
     subtotal_pago: pago.subtotalPago,
     igv_pago: pago.igvPago,
     total_pago: pago.totalPago

@@ -10,6 +10,9 @@ const router = express.Router();
  *     Perfil:
  *       type: object
  *       properties:
+ *         idPerfil:
+ *           type: integer
+ *           readOnly: true
  *         descripcion:
  *           type: string
  *           description: Descripción del perfil

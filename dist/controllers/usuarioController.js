@@ -35,11 +35,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.eliminarUsuario = exports.modificarUsuario = exports.obtenerUsuario = exports.listarUsuarios = exports.insertarUsuario = void 0;
 const usuarioService = __importStar(require("../services/usuarioService"));
 const ResponseModel_1 = require("../models/ResponseModel");
+const usuarioSchema_1 = require("../schemas/usuarioSchema");
 const insertarUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('usuarioController::insertarUsuario');
     try {
-        const response = yield usuarioService.insertarUsuario(req.body);
-        res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
+        const { error, value: validatedUsuario } = usuarioSchema_1.insertarusuarioSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
+        }
+        const response = yield usuarioService.insertarUsuario(validatedUsuario);
+        res.status(201).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {
         console.error(error.message);
@@ -76,12 +81,16 @@ const modificarUsuario = (req, res) => __awaiter(void 0, void 0, void 0, functio
     console.log('usuarioController::modificarUsuario');
     try {
         const { id } = req.params;
-        const response = yield usuarioService.modificarUsuario(Number(id), req.body);
+        const { error, value: validatedUsuario } = usuarioSchema_1.modificarusuarioSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
+        }
+        const response = yield usuarioService.modificarUsuario(Number(id), validatedUsuario);
         res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {
-        console.error(error.message);
-        res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
+        console.error('Error al modificar usuario:', error.message);
+        res.status(500).json(ResponseModel_1.ResponseModel.error("Error interno del servidor"));
     }
 });
 exports.modificarUsuario = modificarUsuario;

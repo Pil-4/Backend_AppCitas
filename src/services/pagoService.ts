@@ -16,10 +16,18 @@ export const insertarPago = async (pago: IPago) => {
 export const listarPagos = async () => {
     const pago: any[] = await prisma.pago.findMany({
         include: {
-            cita: true
+            cita: {
+                include: {
+                    paciente: true,
+                    servicio: {
+                        include: { categoria: true }
+                    },
+                    medico: true
+                }
+            }
         }
     });
-    return pago.map((pago: any)=> fromPrismaPago(pago, pago.cita, pago.paciente, pago.servicio, pago.categoria, pago.medico));
+    return pago.map((pago: any)=> fromPrismaPago(pago, pago.cita, pago.cita.paciente, pago.cita.servicio, pago.cita.servicio.categoria, pago.cita.medico));
 }
 
 export const obtenerPago = async (idPago: number) => {
@@ -38,10 +46,18 @@ export const obtenerPago = async (idPago: number) => {
             id_pago: idPago
         },
         include: {
-            cita: true
+            cita: {
+                include: {
+                    paciente: true,
+                    servicio: {
+                        include: { categoria: true }
+                    },
+                    medico: true
+                }
+            }
         }
     });
-    return fromPrismaPago(pago, pago.cita, pago.paciente, pago.servicio, pago.categoria, pago.medico);
+    return fromPrismaPago(pago, pago.cita, pago.cita.paciente, pago.cita.servicio, pago.cita.servicio.categoria, pago.cita.medico);
 }
 
 export const modificarPago = async (idPago: number, pago:IPago) => {

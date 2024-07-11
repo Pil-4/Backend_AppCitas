@@ -10,6 +10,9 @@ const router = express.Router();
  *     Paciente:
  *       type: object
  *       properties:
+ *         idPaciente:
+ *           type: integer
+ *           readOnly: true
  *         tipoDocumento:
  *           type: string
  *           description: tipo del documento del médico
@@ -20,36 +23,36 @@ const router = express.Router();
  *           example: "12345678"
  *         nombres:
  *           type: string
- *           description: The first names of the patient
+ *           description: nombres del paciente
  *           example: "Juan"
  *         apellidoPaterno:
  *           type: string
- *           description: The paternal surname of the patient
+ *           description: apellido paterno del paciente
  *           example: "Perez"
  *         apellidoMaterno:
  *           type: string
- *           description: The maternal surname of the patient
+ *           description: apellido materno del paciente
  *           example: "Gomez"
  *         correo:
  *           type: string
- *           description: The email of the patient
+ *           description: el correo del paciente
  *           example: "juan.perez@example.com"
  *         celular:
  *           type: string
- *           description: The phone number of the patient
+ *           description: el celular del paciente
  *           example: "987654321"
  *         fechaNacimiento:
  *           type: string
  *           format: date
- *           description: The birth date of the patient
+ *           description: la fecha de nacimiento del paciente
  *           example: "1999-06-18T00:00:00Z"
  *         sexo:
  *           type: string
- *           description: The gender of the patient
+ *           description: el genero del paciente
  *           example: "M"
  *         direccion:
  *           type: string
- *           description: The address of the patient
+ *           description: la direccion del paciente
  *           example: "123 Main St"
  */
 
@@ -58,7 +61,7 @@ const router = express.Router();
  * @swagger
  * /api/v1/paciente:
  *   post:
- *     summary: Create a new patient
+ *     summary: Crear un nuevo paciente
  *     tags: [Paciente]
  *     requestBody:
  *       required: true
@@ -68,7 +71,7 @@ const router = express.Router();
  *             $ref: '#/components/schemas/Paciente'
  *     responses:
  *       201:
- *         description: Patient created successfully
+ *         description: Paciente creado exitosamente
  */
 router.post('/', insertarPaciente);
 
@@ -76,11 +79,11 @@ router.post('/', insertarPaciente);
  * @swagger
  * /api/v1/paciente:
  *   get:
- *     summary: Retrieve a list of patients
+ *     summary: Listar todos los pacientes
  *     tags: [Paciente]
  *     responses:
  *       200:
- *         description: A list of patients
+ *         description: Lista de pacientes
  *         content:
  *           application/json:
  *             schema:
@@ -94,7 +97,7 @@ router.get('/', listarPacientes);
  * @swagger
  * /api/v1/paciente/{id}:
  *   get:
- *     summary: Get a patient by ID
+ *     summary: Obtener paciente por ID
  *     tags: [Paciente]
  *     parameters:
  *       - in: path
@@ -102,10 +105,10 @@ router.get('/', listarPacientes);
  *         schema:
  *           type: integer
  *         required: true
- *         description: The patient ID
+ *         description: ID del paciente
  *     responses:
  *       200:
- *         description: Patient details
+ *         description: Detalles del paciente
  *         content:
  *           application/json:
  *             schema:
@@ -117,7 +120,7 @@ router.get('/:id', obtenerPaciente);
  * @swagger
  * /api/v1/paciente/{id}:
  *   put:
- *     summary: Update a patient by ID
+ *     summary: Actualizar paciente por ID
  *     tags: [Paciente]
  *     parameters:
  *       - in: path
@@ -125,7 +128,7 @@ router.get('/:id', obtenerPaciente);
  *         schema:
  *           type: integer
  *         required: true
- *         description: The patient ID
+ *         description: ID del paciente
  *     requestBody:
  *       required: true
  *       content:
@@ -134,7 +137,7 @@ router.get('/:id', obtenerPaciente);
  *             $ref: '#/components/schemas/Paciente'
  *     responses:
  *       200:
- *         description: Patient updated successfully
+ *         description: Paciente actualizado exitosamente
  */
 router.put('/:id', modificarPaciente);
 
@@ -142,7 +145,7 @@ router.put('/:id', modificarPaciente);
  * @swagger
  * /api/v1/paciente/{id}:
  *   delete:
- *     summary: Delete a patient by ID
+ *     summary: Eliminar paciente por ID
  *     tags: [Paciente]
  *     parameters:
  *       - in: path
@@ -150,10 +153,10 @@ router.put('/:id', modificarPaciente);
  *         schema:
  *           type: integer
  *         required: true
- *         description: The patient ID
+ *         description: ID del paciente
  *     responses:
  *       200:
- *         description: Patient deleted successfully
+ *         description: Paciente eliminado exitosamente
  */
 router.delete('/:id', eliminarPaciente);
 

@@ -7,7 +7,7 @@ exports.modificarHorarioSchema = exports.insertarHorarioSchema = void 0;
 const joi_1 = __importDefault(require("joi"));
 const horarioBaseSchema = {
     diaSemana: joi_1.default.string()
-        .valid('lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'),
+        .valid('LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'),
     horaInicio: joi_1.default.string()
         .pattern(new RegExp('^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$')),
     horaFin: joi_1.default.string()

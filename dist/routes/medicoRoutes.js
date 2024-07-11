@@ -13,6 +13,9 @@ const router = express_1.default.Router();
  *     Medico:
  *       type: object
  *       properties:
+ *         idMedico:
+ *           type: integer
+ *           readOnly: true
  *         tipoDocumento:
  *           type: string
  *           description: tipo del documento del médico

@@ -35,10 +35,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.eliminarPago = exports.modificarPago = exports.obtenerPago = exports.listarPagos = exports.insertarPago = void 0;
 const pagoService = __importStar(require("../services/pagoService"));
 const ResponseModel_1 = require("../models/ResponseModel");
+const pagoSchema_1 = require("../schemas/pagoSchema");
 const insertarPago = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('pagoController::insertarPago');
     try {
-        const response = yield pagoService.insertarPago(req.body);
+        const { error, value: validatedPago } = pagoSchema_1.insertarPagoSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
+        }
+        const response = yield pagoService.insertarPago(validatedPago);
         res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {
@@ -76,7 +81,11 @@ const modificarPago = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     console.log('pagoController::modificarPago');
     try {
         const { id } = req.params;
-        const response = yield pagoService.modificarPago(Number(id), req.body);
+        const { error, value: validatedPago } = pagoSchema_1.modificarPagoSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
+        }
+        const response = yield pagoService.modificarPago(Number(id), validatedPago);
         res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {

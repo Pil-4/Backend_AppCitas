@@ -35,10 +35,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.eliminarPerfil = exports.modificarPerfil = exports.obtenerPerfil = exports.listarPerfils = exports.insertarPerfil = void 0;
 const perfilService = __importStar(require("../services/perfilService"));
 const ResponseModel_1 = require("../models/ResponseModel");
+const perfilSchema_1 = require("../schemas/perfilSchema");
 const insertarPerfil = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('perfilController::insertarPerfil');
     try {
-        const response = yield perfilService.insertarPerfil(req.body);
+        const { error, value: validatedPerfil } = perfilSchema_1.insertarPerfilSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
+        }
+        const response = yield perfilService.insertarPerfil(validatedPerfil);
         res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {
@@ -76,7 +81,11 @@ const modificarPerfil = (req, res) => __awaiter(void 0, void 0, void 0, function
     console.log('perfilController::modificarPerfil');
     try {
         const { id } = req.params;
-        const response = yield perfilService.modificarPerfil(Number(id), req.body);
+        const { error, value: validatedPerfil } = perfilSchema_1.modificarPerfilSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
+        }
+        const response = yield perfilService.modificarPerfil(Number(id), validatedPerfil);
         res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {

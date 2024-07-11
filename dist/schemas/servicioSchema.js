@@ -10,6 +10,11 @@ const servicioBaseSchema = {
         .max(150),
     precio: joi_1.default.number().positive()
 };
-exports.insertarServicioSchema = joi_1.default.object(Object.assign(Object.assign({}, servicioBaseSchema), { nombreServicio: servicioBaseSchema.nombreServicio.required(), precio: servicioBaseSchema.precio.required() }));
+exports.insertarServicioSchema = joi_1.default.object(Object.assign(Object.assign({}, servicioBaseSchema), { nombreServicio: servicioBaseSchema.nombreServicio.required(), precio: servicioBaseSchema.precio.required(), categoria: joi_1.default.object({
+        idCategoria: joi_1.default.number().integer().required(),
+        nombreCategoria: joi_1.default.string()
+            .min(5)
+            .max(50)
+    }).required() }));
 exports.modificarServicioSchema = joi_1.default.object(Object.assign({}, servicioBaseSchema));
 //# sourceMappingURL=servicioSchema.js.map

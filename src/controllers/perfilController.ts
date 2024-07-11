@@ -1,17 +1,22 @@
-import { Request, Response } from "express"
+import { Request, Response } from "express";
 import * as perfilService from "../services/perfilService";
 import { ResponseModel } from "../models/ResponseModel";
+import { insertarPerfilSchema, modificarPerfilSchema } from "../schemas/perfilSchema"; 
 
 export const insertarPerfil = async (req: Request, res: Response) => {
     console.log('perfilController::insertarPerfil');
     try {
-        const response = await perfilService.insertarPerfil(req.body);
-        res.status(200).json(ResponseModel.success(null,response));
-    } catch (error) {
+        const { error, value: validatedPerfil } = insertarPerfilSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel.error(error.details[0].message));
+        }
+        const response = await perfilService.insertarPerfil(validatedPerfil);
+        res.status(200).json(ResponseModel.success(null, response)); 
+    } catch (error: any) {
         console.error(error.message);
         res.status(500).json(ResponseModel.error(error.message));
     }
-}
+};
 
 export const listarPerfils = async (req: Request, res: Response) => {
     console.log('perfilController::listarPerfils');
@@ -41,13 +46,17 @@ export const modificarPerfil = async (req: Request, res: Response) => {
     console.log('perfilController::modificarPerfil');
     try {
         const { id } = req.params;
-        const response = await perfilService.modificarPerfil(Number(id),req.body)
-        res.status(200).json(ResponseModel.success(null,response));
-    } catch (error) {
+        const { error, value: validatedPerfil } = modificarPerfilSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel.error(error.details[0].message));
+        }
+        const response = await perfilService.modificarPerfil(Number(id), validatedPerfil);
+        res.status(200).json(ResponseModel.success(null, response));
+    } catch (error: any) {
         console.error(error.message);
         res.status(500).json(ResponseModel.error(error.message));
     }
-}
+};
 
 export const eliminarPerfil = async (req: Request, res: Response) => {
     console.log('perfilController::eliminarPerfil');

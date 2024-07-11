@@ -35,10 +35,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.eliminarHorario = exports.modificarHorario = exports.obtenerHorario = exports.listarHorarios = exports.insertarHorario = void 0;
 const horarioService = __importStar(require("../services/horarioService"));
 const ResponseModel_1 = require("../models/ResponseModel");
+const horarioSchema_1 = require("../schemas/horarioSchema");
 const insertarHorario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('horarioController::insertarHorario');
     try {
-        const response = yield horarioService.insertarHorario(req.body);
+        const { error, value: validatedHorario } = horarioSchema_1.insertarHorarioSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
+        }
+        const response = yield horarioService.insertarHorario(validatedHorario);
         res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {
@@ -76,7 +81,11 @@ const modificarHorario = (req, res) => __awaiter(void 0, void 0, void 0, functio
     console.log('horarioController::modificarHorario');
     try {
         const { id } = req.params;
-        const response = yield horarioService.modificarHorario(Number(id), req.body);
+        const { error, value: validatedHorario } = horarioSchema_1.modificarHorarioSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
+        }
+        const response = yield horarioService.modificarHorario(Number(id), validatedHorario);
         res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {

@@ -35,10 +35,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.eliminarCategoria = exports.modificarCategoria = exports.obtenerCategoria = exports.listarCategorias = exports.insertarCategoria = void 0;
 const categoriaService = __importStar(require("../services/categoriaService"));
 const ResponseModel_1 = require("../models/ResponseModel");
+const categoriaSchema_1 = require("../schemas/categoriaSchema");
 const insertarCategoria = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('categoriaController::insertarCategoria');
     try {
-        const response = yield categoriaService.insertarCategoria(req.body);
+        const { error, value: validatedCategoria } = categoriaSchema_1.insertarcategoriaSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
+        }
+        const response = yield categoriaService.insertarCategoria(validatedCategoria);
         res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {
@@ -76,7 +81,11 @@ const modificarCategoria = (req, res) => __awaiter(void 0, void 0, void 0, funct
     console.log('categoriaController::modificarCategoria');
     try {
         const { id } = req.params;
-        const response = yield categoriaService.modificarCategoria(Number(id), req.body);
+        const { error, value: validatedCategoria } = categoriaSchema_1.modificarcategoriaSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
+        }
+        const response = yield categoriaService.modificarCategoria(Number(id), validatedCategoria);
         res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {

@@ -25,11 +25,15 @@ const listarCitas = () => __awaiter(void 0, void 0, void 0, function* () {
     const cita = yield prisma.cita.findMany({
         include: {
             paciente: true,
-            servicio: true,
+            servicio: {
+                include: {
+                    categoria: true
+                }
+            },
             medico: true
         }
     });
-    return cita.map((cita) => (0, citaMapper_1.fromPrismaCita)(cita, cita.paciente, cita.servicio, cita.medico, cita.categoria));
+    return cita.map((cita) => (0, citaMapper_1.fromPrismaCita)(cita, cita.paciente, cita.servicio, cita.servicio.categoria, cita.medico));
 });
 exports.listarCitas = listarCitas;
 const obtenerCita = (idCita) => __awaiter(void 0, void 0, void 0, function* () {
@@ -47,11 +51,15 @@ const obtenerCita = (idCita) => __awaiter(void 0, void 0, void 0, function* () {
         },
         include: {
             paciente: true,
-            servicio: true,
+            servicio: {
+                include: {
+                    categoria: true
+                }
+            },
             medico: true
         }
     });
-    return (0, citaMapper_1.fromPrismaCita)(cita, cita.paciente, cita.servicio, cita.medico, cita.categoria);
+    return (0, citaMapper_1.fromPrismaCita)(cita, cita.paciente, cita.servicio, cita.servicio.categoria, cita.medico);
 });
 exports.obtenerCita = obtenerCita;
 const modificarCita = (idCita, cita) => __awaiter(void 0, void 0, void 0, function* () {

@@ -35,10 +35,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.eliminarCita = exports.modificarCita = exports.obtenerCita = exports.listarCitas = exports.insertarCita = void 0;
 const citaService = __importStar(require("../services/citaService"));
 const ResponseModel_1 = require("../models/ResponseModel");
+const citaSchema_1 = require("../schemas/citaSchema");
 const insertarCita = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('citaController::insertarCita');
     try {
-        const response = yield citaService.insertarCita(req.body);
+        const { error, value: validatedCita } = citaSchema_1.insertarCitaSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
+        }
+        const response = yield citaService.insertarCita(validatedCita);
         res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {
@@ -76,7 +81,11 @@ const modificarCita = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     console.log('citaController::modificarCita');
     try {
         const { id } = req.params;
-        const response = yield citaService.modificarCita(Number(id), req.body);
+        const { error, value: validatedCita } = citaSchema_1.modificarCitaSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
+        }
+        const response = yield citaService.modificarCita(Number(id), validatedCita);
         res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {

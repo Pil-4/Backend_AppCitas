@@ -24,10 +24,18 @@ exports.insertarPago = insertarPago;
 const listarPagos = () => __awaiter(void 0, void 0, void 0, function* () {
     const pago = yield prisma.pago.findMany({
         include: {
-            cita: true
+            cita: {
+                include: {
+                    paciente: true,
+                    servicio: {
+                        include: { categoria: true }
+                    },
+                    medico: true
+                }
+            }
         }
     });
-    return pago.map((pago) => (0, pagoMapper_1.fromPrismaPago)(pago, pago.cita, pago.paciente, pago.servicio, pago.categoria, pago.medico));
+    return pago.map((pago) => (0, pagoMapper_1.fromPrismaPago)(pago, pago.cita, pago.cita.paciente, pago.cita.servicio, pago.cita.servicio.categoria, pago.cita.medico));
 });
 exports.listarPagos = listarPagos;
 const obtenerPago = (idPago) => __awaiter(void 0, void 0, void 0, function* () {
@@ -44,10 +52,18 @@ const obtenerPago = (idPago) => __awaiter(void 0, void 0, void 0, function* () {
             id_pago: idPago
         },
         include: {
-            cita: true
+            cita: {
+                include: {
+                    paciente: true,
+                    servicio: {
+                        include: { categoria: true }
+                    },
+                    medico: true
+                }
+            }
         }
     });
-    return (0, pagoMapper_1.fromPrismaPago)(pago, pago.cita, pago.paciente, pago.servicio, pago.categoria, pago.medico);
+    return (0, pagoMapper_1.fromPrismaPago)(pago, pago.cita, pago.cita.paciente, pago.cita.servicio, pago.cita.servicio.categoria, pago.cita.medico);
 });
 exports.obtenerPago = obtenerPago;
 const modificarPago = (idPago, pago) => __awaiter(void 0, void 0, void 0, function* () {

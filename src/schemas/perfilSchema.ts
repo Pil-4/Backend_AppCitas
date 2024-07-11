@@ -5,11 +5,11 @@ const perfilBaseSchema = {
     .max(100)
 };
 
-export const insertarperfilSchema = Joi.object({
+export const insertarPerfilSchema = Joi.object({
     ...perfilBaseSchema,
     descripcion: perfilBaseSchema.descripcion.required()
 });
 
-export const modificarperfilSchema = Joi.object({
+export const modificarPerfilSchema = Joi.object({
     ...perfilBaseSchema
 });

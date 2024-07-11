@@ -33,12 +33,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.eliminarNotificacion = exports.modificarNotificacion = exports.obtenerNotificacion = exports.listarNotificacions = exports.insertarNotificacion = void 0;
-const notificacionService = __importStar(require("../services/norificacionService"));
+const notificacionService = __importStar(require("../services/notificacionService"));
 const ResponseModel_1 = require("../models/ResponseModel");
+const notificacionSchema_1 = require("../schemas/notificacionSchema");
 const insertarNotificacion = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('notificacionController::insertarNotificacion');
     try {
-        const response = yield notificacionService.insertarNotificacion(req.body);
+        const { error, value: validatedNotificacion } = notificacionSchema_1.insertarNotificacionSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
+        }
+        const response = yield notificacionService.insertarNotificacion(validatedNotificacion);
         res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {
@@ -76,7 +81,11 @@ const modificarNotificacion = (req, res) => __awaiter(void 0, void 0, void 0, fu
     console.log('notificacionController::modificarNotificacion');
     try {
         const { id } = req.params;
-        const response = yield notificacionService.modificarNotificacion(Number(id), req.body);
+        const { error, value: validatedNotificacion } = notificacionSchema_1.modificarNotificacionSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
+        }
+        const response = yield notificacionService.modificarNotificacion(Number(id), validatedNotificacion);
         res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {

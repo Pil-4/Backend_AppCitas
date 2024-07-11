@@ -35,11 +35,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.eliminarServicio = exports.modificarServicio = exports.obtenerServicio = exports.listarServicios = exports.insertarServicio = void 0;
 const servicioService = __importStar(require("../services/servicioService"));
 const ResponseModel_1 = require("../models/ResponseModel");
+const servicioSchema_1 = require("../schemas/servicioSchema");
 const insertarServicio = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('servicioController::insertarServicio');
     try {
-        const response = yield servicioService.insertarServicio(req.body);
-        res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
+        const { error, value: validatedServicio } = servicioSchema_1.insertarServicioSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
+        }
+        const response = yield servicioService.insertarServicio(validatedServicio);
+        res.status(201).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {
         console.error(error.message);
@@ -76,12 +81,16 @@ const modificarServicio = (req, res) => __awaiter(void 0, void 0, void 0, functi
     console.log('servicioController::modificarServicio');
     try {
         const { id } = req.params;
-        const response = yield servicioService.modificarServicio(Number(id), req.body);
+        const { error, value: validatedServicio } = servicioSchema_1.modificarServicioSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json(ResponseModel_1.ResponseModel.error(error.details[0].message));
+        }
+        const response = yield servicioService.modificarServicio(Number(id), validatedServicio);
         res.status(200).json(ResponseModel_1.ResponseModel.success(null, response));
     }
     catch (error) {
-        console.error(error.message);
-        res.status(500).json(ResponseModel_1.ResponseModel.error(error.message));
+        console.error('Error al modificar servicio:', error.message);
+        res.status(500).json(ResponseModel_1.ResponseModel.error("Error interno del servidor"));
     }
 });
 exports.modificarServicio = modificarServicio;

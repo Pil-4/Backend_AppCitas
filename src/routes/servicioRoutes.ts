@@ -10,6 +10,9 @@ const router = express.Router();
  *     Servicio:
  *       type: object
  *       properties:
+  *         idServicio:
+ *           type: integer
+ *           readOnly: true
  *         categoria:
  *           type: object
  *           properties:
